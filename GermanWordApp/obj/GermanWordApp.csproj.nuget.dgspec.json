@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Development\\Repos\\german-word-app-server\\GermanWordApp\\GermanWordApp.csproj": {}
+    "/mnt/d/Development/Repos/german-word-app-server/GermanWordApp/GermanWordApp.csproj": {}
   },
   "projects": {
-    "d:\\Development\\Repos\\german-word-app-server\\GermanWordApp\\GermanWordApp.csproj": {
+    "/mnt/d/Development/Repos/german-word-app-server/GermanWordApp/GermanWordApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Development\\Repos\\german-word-app-server\\GermanWordApp\\GermanWordApp.csproj",
+        "projectUniqueName": "/mnt/d/Development/Repos/german-word-app-server/GermanWordApp/GermanWordApp.csproj",
         "projectName": "GermanWordApp",
-        "projectPath": "d:\\Development\\Repos\\german-word-app-server\\GermanWordApp\\GermanWordApp.csproj",
-        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
-        "outputPath": "d:\\Development\\Repos\\german-word-app-server\\GermanWordApp\\obj\\",
+        "projectPath": "/mnt/d/Development/Repos/german-word-app-server/GermanWordApp/GermanWordApp.csproj",
+        "packagesPath": "/home/dan/.nuget/packages/",
+        "outputPath": "/mnt/d/Development/Repos/german-word-app-server/GermanWordApp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/dan/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -59,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
