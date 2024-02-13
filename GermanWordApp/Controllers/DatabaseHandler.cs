@@ -11,19 +11,20 @@ public class DatabaseHandler {
     private string connectionString = "";
     private MySqlConnection? connection;
 
-    public DatabaseHandler(string configFile) {
-        LoadConfig(configFile);
-    }
 
-    private void LoadConfig(string configFile) {
+    public DatabaseHandler() { }
+
+    public void LoadConfig(string configFile) {
+        // Check if the configuration file exists
         if (!File.Exists(configFile)) {
             throw new FileNotFoundException("Database configuration file not found.");
         }
 
         try {
-
+            // Read all lines from the configuration file
             string[] configLines = File.ReadAllLines(configFile);
 
+            // Parse each line to extract database connection details
             foreach (string line in configLines) {
                 if (line.StartsWith("Server IP:")) serverIP = line.Substring("Server IP:".Length).Trim();
                 else if (line.StartsWith("MySQL Admin Username:")) adminUsername = line.Substring("MySQL Admin Username:".Length).Trim();
@@ -31,12 +32,14 @@ public class DatabaseHandler {
                 else if (line.StartsWith("Database Name:")) dbName = line.Substring("Database Name:".Length).Trim();
             }
 
-
+            // Check if all required database configuration details are provided
             if (string.IsNullOrEmpty(serverIP) || string.IsNullOrEmpty(adminUsername) || string.IsNullOrEmpty(adminPassword) || string.IsNullOrEmpty(dbName)) {
                 throw new Exception("Database configuration is incomplete.");
             }
 
+            // Construct connection string using the parsed details
             connectionString = $"Server={serverIP};Uid={adminUsername};Pwd={adminPassword};Database={dbName};";
+
         } catch (Exception ex) {
             throw new Exception("Error loading database configuration: " + ex.Message);
         }
@@ -44,7 +47,10 @@ public class DatabaseHandler {
 
     public void Connect() {
         try {
+            // Create a new MySqlConnection object with the constructed connection string and open the connection
             connection = new MySqlConnection(connectionString);
+            connection.Open();
+
         } catch (Exception ex) {
             Console.WriteLine("Error: " + ex.Message);
         }
@@ -52,7 +58,11 @@ public class DatabaseHandler {
 
     public void Disconnect() {
         try {
-            connection = null;
+            // Check if the connection object exists and if the connection is open, then close the connection
+            if (connection != null && connection.State != ConnectionState.Closed) {
+                connection.Close();
+            }
+
         } catch (Exception ex) {
             Console.WriteLine("Error: " + ex.Message);
         }
@@ -62,18 +72,17 @@ public class DatabaseHandler {
         DataTable dataTable = new DataTable();
 
         try {
-            if (connection is not null) {
-                connection.Open();
-
-                MySqlCommand command = new MySqlCommand(query, connection);
-                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
-
+            // Check if the connection object exists and if the connection is open
+            if (connection != null && connection.State == ConnectionState.Open) {
+                // Create a MySqlCommand and MySqlDataAdapter objects to execute the query and fill the DataTable
+                using MySqlCommand command = new MySqlCommand(query, connection);
+                using MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 adapter.Fill(dataTable);
 
-                connection.Close();
             } else {
                 Console.WriteLine("Error: Not Connected!");
             }
+
         } catch (Exception ex) {
             Console.WriteLine("Error: " + ex.Message);
         }

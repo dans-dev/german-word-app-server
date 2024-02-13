@@ -1,22 +1,15 @@
-﻿using System.Data;
+﻿using System;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 class Program {
-    static void Main() {
-        string configFile = "../database_config.txt";
-        DatabaseHandler dbHandler = new DatabaseHandler(configFile);
-        dbHandler.Connect();
-
-        string query = "SELECT * FROM Words;";
-        DataTable result = dbHandler.ExecuteQuery(query);
-
-        Console.WriteLine("Results of the query:");
-        foreach (DataRow row in result.Rows) {
-            foreach (DataColumn column in result.Columns) {
-                Console.Write($"{column.ColumnName}: {row[column]} | ");
-            }
-            Console.WriteLine();
-        }
-
-       dbHandler.Disconnect();
+    static void Main(string[] args) {
+        CreateHostBuilder(args).Build().Run();
     }
+
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder => {
+                webBuilder.UseStartup<Startup>();
+            });
 }
